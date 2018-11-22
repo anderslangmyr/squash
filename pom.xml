@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.0.6.RELEASE</version>
+  </parent>
+
+  <groupId>com.langmyr</groupId>
+  <artifactId>squash</artifactId>
+  <version>DEVELOP-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <properties>        
+
+    <!-- ========================================================================================================================================= -->
+    <!-- See: https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html#Packaging                                            -->
+    <!-- See: http://maven.apache.org/ref/3.5.4/maven-model-builder/super-pom.html                                                                 -->
+    <!--                                                                                                                                           -->
+    <!-- Using latest versions of plugins added by the jar packaging type and set in the maven super POM (version 3.5.4),                          -->
+    <!-- overriding versions set in spring boot 2.0.6 if needed.                                                                                   -->
+    <!--                                                                                                                                           -->
+    <!-- Plugins added by the jar packaging type:                                                                                                  -->
+    <!--                                 maven       => boot    => latest (2018-09-03)                                                             -->
+    <!--   - maven-clean-plugin       => 2.5         => 3.0.0   => 3.1.0   => https://maven.apache.org/plugins/maven-clean-plugin/                 -->
+    <!--   - maven-resources-plugin   => 2.6         => 3.0.2   => 3.1.0   => https://maven.apache.org/plugins/maven-resources-plugin/             -->
+    <!--   - maven-compiler-plugin    => 3.1         => 3.7.0   => 3.8.0   => https://maven.apache.org/plugins/maven-compiler-plugin/              -->
+    <!--   - maven-surefire-plugin    => 2.12.4      => 2.21.0  => 2.22.0  => https://maven.apache.org/components/surefire/maven-surefire-plugin/  -->
+    <!--   - maven-jar-plugin         => 2.4         => 3.0.2   => 3.1.0   => https://maven.apache.org/plugins/maven-jar-plugin/                   -->
+    <!--   - maven-install-plugin     => 2.4         => 2.5.2   => 2.5.2   => https://maven.apache.org/plugins/maven-install-plugin/               -->
+    <!--   - maven-deploy-plugin      => 2.7         => 2.8.2   => 2.8.2   => https://maven.apache.org/plugins/maven-deploy-plugin/                -->
+    <!--                                                                                                                                           -->
+    <!-- Plugins set in maven's super POM (version 3.5.4):                                                                                         -->
+    <!--                                 maven       => boot    => latest (2018-09-03)                                                             -->
+    <!--   - maven-antrun-plugin      => 1.3         => 1.8     => 1.8     => https://maven.apache.org/plugins/maven-antrun-plugin/                -->
+    <!--   - maven-assembly-plugin    => 2.2-beta-5  => 3.1.0   => 3.1.0   => https://maven.apache.org/plugins/maven-assembly-plugin/              -->
+    <!--   - maven-dependency-plugin  => 2.8         => 3.0.2   => 3.1.1   => https://maven.apache.org/plugins/maven-dependency-plugin/            -->
+    <!--   - maven-release-plugin     => 2.5.3       => -       => 2.5.3   => https://maven.apache.org/maven-release/maven-release-plugin/         -->
+    <!-- ========================================================================================================================================= -->
+    <maven-clean-plugin.version>3.1.0</maven-clean-plugin.version>
+    <maven-resources-plugin.version>3.1.0</maven-resources-plugin.version>
+    <maven-compiler-plugin.version>3.8.0</maven-compiler-plugin.version>
+    <maven-surefire-plugin.version>2.22.0</maven-surefire-plugin.version>
+    <maven-jar-plugin.version>3.1.0</maven-jar-plugin.version>
+    <maven-install-plugin.version>2.5.2</maven-install-plugin.version>
+    <maven-deploy-plugin.version>2.8.2</maven-deploy-plugin.version>
+
+    <maven-antrun-plugin.version>1.8</maven-antrun-plugin.version>
+    <maven-assembly-plugin.version>3.1.0</maven-assembly-plugin.version>
+    <maven-dependency-plugin.version>3.1.1</maven-dependency-plugin.version>
+    <maven-release-plugin.version>2.5.3</maven-release-plugin.version><!-- Not defined in spring boot parents, but added here for correspondence with the others -->
+
+
+
+    <!-- ====================================================================== -->
+    <!-- Overriding other versions set in spring boot parent poms               -->
+    <!-- ====================================================================== -->
+    <log4j2.version>2.11.1</log4j2.version>
+    <slf4j.version>1.8.0-beta2</slf4j.version>
+    <versions-maven-plugin.version>2.6</versions-maven-plugin.version>
+
+
+
+    <!-- ====================================================================== -->
+    <!-- Default values for the OWASP dependency check plugin, can be           -->
+    <!-- overridden in projects using this POM.                                 -->
+    <!-- ====================================================================== -->
+    <dependency_check.failBuildOnCVSS>0.0</dependency_check.failBuildOnCVSS>
+    <dependency_check.hintsFile />
+    <dependency_check.skip>false</dependency_check.skip>
+
+
+    <!-- ====================================================================== -->
+    <!-- Default values for the jacoco plugin, can be overridden in projects    -->
+    <!-- using this POM. To make the surefire plugin work with jacoco when      -->
+    <!-- arguments to the JVM has been specified through the argLine property,  -->
+    <!-- an empty argLine property is specified here.                           -->
+    <!-- See http://www.eclemma.org/jacoco/trunk/doc/prepare-agent-mojo.html.   -->
+    <!-- ====================================================================== -->
+    <jacoco.coveredratio.minimum>0.20</jacoco.coveredratio.minimum>
+    <argLine />
+  </properties>
+
+  <scm>
+    <connection>scm:git:git@github.com:anderslangmyr/squash.git</connection>
+    <developerConnection>scm:git:git@github.com:anderslangmyr/squash.git</developerConnection>
+    <url>https://github.com/anderslangmyr/squash</url>
+    <tag>HEAD</tag>
+  </scm>
+
+  <dependencies>  
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jcl-over-slf4j</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>jul-to-slf4j</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.logging.log4j</groupId>
+      <artifactId>log4j-slf4j18-impl</artifactId>
+      <version>${log4j2.version}</version>
+    </dependency>
+
+    
+
+    <!-- ===== Spring Boot ===== -->
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-logging</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-starter-tomcat</artifactId>
+        </exclusion>
+        <exclusion>
+          <groupId>com.fasterxml.jackson.core</groupId>
+          <artifactId>jackson-databind</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-jetty</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>commons-lang</groupId>
+      <artifactId>commons-lang</artifactId>
+      <version>2.6</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.squareup.okhttp3</groupId>
+      <artifactId>okhttp</artifactId>
+      <version>3.8.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>27.0-jre</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <!-- ====================================================================
+            See: http://maven.apache.org/maven-release/maven-release-plugin/
+
+            maven-release-plugin version 2.5.3 in combination with
+            maven-scm-provider-gitexe versions 1.9.1, 1.9.2, 1.9.4 and 1.9.5
+            does not commit in the standard:
+              [maven-release-plugin] prepare for next development iteration
+              [maven-release-plugin] prepare release <artifactId>-<version>
+            commit messages for some reason. Therefore is version 1.9 chosen.
+           ==================================================================== -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.5.3</version>
+        <configuration>
+          <arguments>-Dmaven.wagon.http.ssl.insecure=true</arguments>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.apache.maven.scm</groupId>
+            <artifactId>maven-scm-provider-gitexe</artifactId>
+            <version>1.9</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+      
+      <!-- ========================================================================================= -->
+      <!--  See: https://jeremylong.github.io/DependencyCheck/dependency-check-maven/                -->
+      <!--                                                                                           -->
+      <!--  Terminology:                                                                             -->
+      <!--      -> CVE  - Common Vulnerabilities and Exposures                                       -->
+      <!--      -> CPE  - Common Platform Enumeration                                                -->
+      <!--      -> CVSS - Common Vulnerability Scoring System                                        -->
+      <!--                (see https://www.first.org/cvss/specification-document)                    -->
+      <!--                                                                                           -->
+      <!--  Identifies project dependencies and checks if there are any known, publicly disclosed,   -->
+      <!--  vulnerabilities (CVE). See: https://www.owasp.org/index.php/OWASP_Dependency_Check       -->
+      <!--                                                                                           -->
+      <!--  The first time this task is executed it may take 20 minutes or more as it downloads and  -->
+      <!--  processes the data from the National Vulnerability Database (NVD) hosted by NIST:        -->
+      <!--  https://nvd.nist.gov. After the first batch download, as long as the plug-in is executed -->
+      <!--  at least once every seven days the update will only take a few seconds.                  -->
+      <!--                                                                                           -->
+      <!--  CVSS Rating scale:                                                                       -->
+      <!--     None 0.0                                                                              -->
+      <!--     Low 0.1 - 3.9                                                                         -->
+      <!--     Medium 4.0 - 6.9                                                                      -->
+      <!--     High 7.0 - 8.9                                                                        -->
+      <!--     Critical 9.0 - 10.0                                                                   -->
+      <!--  ======================================================================================== -->
+      <plugin>
+        <groupId>org.owasp</groupId>
+        <artifactId>dependency-check-maven</artifactId>
+        <version>3.2.1</version>
+        <configuration>
+          <cveValidForHours>24</cveValidForHours>
+          <failBuildOnCVSS>${dependency_check.failBuildOnCVSS}</failBuildOnCVSS>
+          <suppressionFiles>
+            <suppressionFile>dependency-suppressions.xml</suppressionFile>
+          </suppressionFiles>
+          <hintsFile>${dependency_check.hintsFile}</hintsFile>
+          <skip>${dependency_check.skip}</skip>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      
+        <!-- ==================================================================== -->
+        <!-- See: http://www.eclemma.org/jacoco/trunk/doc/maven.html              -->
+        <!-- ==================================================================== -->
+        <plugin>
+          <groupId>org.jacoco</groupId>
+          <artifactId>jacoco-maven-plugin</artifactId>
+          <version>0.8.2</version>
+          <executions>
+            <execution>
+              <id>default-prepare-agent</id>
+              <goals>
+                <goal>prepare-agent</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>default-report</id>
+              <phase>prepare-package</phase>
+              <goals>
+                <goal>report</goal>
+              </goals>
+            </execution>
+            <execution>
+              <id>default-check</id>
+              <goals>
+                <goal>check</goal>
+              </goals>
+              <configuration>
+                <rules>
+                  <rule>
+                    <element>BUNDLE</element>
+                    <limits>
+                      <limit>
+                        <counter>COMPLEXITY</counter>
+                        <value>COVEREDRATIO</value>
+                        <minimum>${jacoco.coveredratio.minimum}</minimum>
+                      </limit>
+                    </limits>
+                  </rule>
+                </rules>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+
+        <!-- ======================================================================================================== -->
+        <!-- See: https://docs.spring.io/spring-boot/docs/current/reference/html/build-tool-plugins-maven-plugin.html -->
+        <!-- ======================================================================================================== -->
+        <plugin>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
+          <executions>
+            <execution>
+              <goals>
+                <goal>repackage</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+    </plugins>
+  </build>
+</project>
