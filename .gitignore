@@ -1,0 +1,9 @@
+# Eclipse
+/.settings/
+/.project
+/.classpath
+/.factorypath
+
+# Project
+/target/
+/ignore/
