@@ -158,12 +158,14 @@
         <artifactId>maven-release-plugin</artifactId>
         <version>2.5.3</version>
         <configuration>
-          <arguments>-Dmaven.wagon.http.ssl.insecure=true</arguments>
+          <providerImplementations>
+            <git>jgit</git>
+          </providerImplementations>
         </configuration>
         <dependencies>
           <dependency>
             <groupId>org.apache.maven.scm</groupId>
-            <artifactId>maven-scm-provider-gitexe</artifactId>
+            <artifactId>maven-scm-provider-jgit</artifactId>
             <version>1.11.2</version>
           </dependency>
         </dependencies>
